@@ -25,6 +25,6 @@ jobs:
         run: |
           zip -r custom-control-tower-configuration.zip .
       # Upload a file to AWS s3
-      - name:  Copy index.html to s3
+      - name:  Copy ZIP archive to s3
         run: |
           aws s3 cp ./custom-control-tower-configuration.zip s3://${{ env.BUCKET_NAME }}/

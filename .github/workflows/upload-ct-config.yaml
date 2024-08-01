@@ -23,8 +23,8 @@ jobs:
       # Archive the folder
       - name:  Create ZIP archive
         run: |
-          zip -r _custom-control-tower-configuration.zip .
+          zip -r custom-control-tower-configuration.zip .
       # Upload a file to AWS s3
       - name:  Copy index.html to s3
         run: |
-          aws s3 cp ./_custom-control-tower-configuration.zip s3://${{ env.BUCKET_NAME }}/
+          aws s3 cp ./custom-control-tower-configuration.zip s3://${{ env.BUCKET_NAME }}/

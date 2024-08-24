@@ -19,7 +19,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: ${{ vars.GH_ACT_IAM_ROLE }}
+          role-to-assume: ${{ env.GH_ACT_IAM_ROLE }}
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
       # Archive the folder
@@ -29,4 +29,4 @@ jobs:
       # Upload a file to AWS s3
       - name:  Copy ZIP archive to s3
         run: |
-          aws s3 cp ./custom-control-tower-configuration.zip s3://${{ vars.CT_CUSTOM_CONFIG_S3_BUCKET }}/
+          aws s3 cp ./custom-control-tower-configuration.zip s3://${{ env.CT_CUSTOM_CONFIG_S3_BUCKET }}/

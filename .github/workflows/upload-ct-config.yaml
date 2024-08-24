@@ -1,6 +1,6 @@
 name: Upload Control Tower configuration to S3
 on:
-  push
+  push:
     branches:
       - main
 env:

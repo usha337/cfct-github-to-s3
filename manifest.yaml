@@ -12,7 +12,7 @@ resources:
         - Root
 
 
-  ## S3 for VPC Flow Logs ##
+  ## S3 for VPC Flow Logs ###
   - name: s3-flow-logs
     resource_file: templates/logging/s3-flow-logs.yaml
     deploy_method: stack_set

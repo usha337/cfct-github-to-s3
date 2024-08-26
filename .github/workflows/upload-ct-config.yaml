@@ -11,9 +11,6 @@ permissions:
   contents: read    # This is required for actions/checkout
 jobs:
   S3PackageUpload:
-    env:
-      GH_ACT_IAM_ROLE: ${{ vars.GH_ACT_IAM_ROLE }}
-      CT_CUSTOM_CONFIG_S3_BUCKET: ${{ vars.CT_CUSTOM_CONFIG_S3_BUCKET }}
     runs-on: ubuntu-latest
     steps:
       - name: Git clone the repository
@@ -21,7 +18,7 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: ${{ env.GH_ACT_IAM_ROLE }}
+          role-to-assume: "${{ vars.GH_ACT_IAM_ROLE }}"
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
 
@@ -32,4 +29,4 @@ jobs:
       # Upload a file to AWS s3
       - name:  Copy ZIP archive to s3
         run: |
-          aws s3 cp ./custom-control-tower-configuration.zip s3://${{ env.CT_CUSTOM_CONFIG_S3_BUCKET }}/
+          aws s3 cp ./custom-control-tower-configuration.zip s3://${{ vars.CT_CUSTOM_CONFIG_S3_BUCKET }}/

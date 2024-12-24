@@ -11,7 +11,14 @@ resources:
       organizational_units:
         - Root
 
-
+- name: restrict-creatoinof-gp2volume
+    description: To prevent gp2 volume creation
+    resource_file: policies/scp-ebsvolumegp2block.json
+    deploy_method: scp
+    deployment_targets:
+      organizational_units:
+        - dev
+        - INT
   ## S3 for VPC Flow Logs ###
   - name: s3-flow-logs
     resource_file: templates/logging/s3-flow-logs.yaml

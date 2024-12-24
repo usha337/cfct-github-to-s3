@@ -18,7 +18,7 @@ resources:
     deploy_method: stack_set
     deployment_targets:
       accounts:
-        - 444091872385 # Log Archive account
+        - 515966522509 # Log Archive account
     export_outputs:
       - name: /logs/vpc-flow-logs/s3-bucket-arn
         value: $[output_BucketArn]

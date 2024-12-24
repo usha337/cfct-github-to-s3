@@ -4,6 +4,7 @@ on:
     branches:
       - main
 env:
+  BUCKET_NAME : "custom-control-tower-test-configuration-637423596514-us-east-1"
   AWS_REGION : "us-east-1"
 # permission can be added at job level or workflow level
 permissions:
@@ -18,7 +19,8 @@ jobs:
       - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          role-to-assume: "${{ vars.GH_ACT_IAM_ROLE }}"
+          # role-to-assume: "${{ vars.GH_ACT_IAM_ROLE }}"
+          role-to-assume: "arn:aws:iam::637423596514:role/githubactions-webidentity"
           role-session-name: samplerolesession
           aws-region: ${{ env.AWS_REGION }}
 
@@ -29,4 +31,4 @@ jobs:
       # Upload a file to AWS s3
       - name:  Copy ZIP archive to s3
         run: |
-          aws s3 cp ./custom-control-tower-configuration.zip s3://${{ vars.CT_CUSTOM_CONFIG_S3_BUCKET }}/
+          aws s3 cp ./custom-control-tower-configuration.zip s3://${{ env.BUCKET_NAME }}/

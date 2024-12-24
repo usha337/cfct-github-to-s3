@@ -39,99 +39,99 @@ resources:
         
   
     ## IPAM ##
-  - name: ipam
-    resource_file: templates/networking/ipam.yaml
-    deploy_method: stack_set
-    deployment_targets:
-      accounts:
-        - 240724570208 # Network account
-    regions:
-      - us-east-1
-    parameters:
-      - parameter_key: Region
-        parameter_value: us-east-1
-      - parameter_key: TopLevelCidr
-        parameter_value: 10.0.0.0/9
-      - parameter_key: RegionLevelCidr
-        parameter_value: 10.0.0.0/10
-      - parameter_key: ProdLevelCidr
-        parameter_value: 10.0.0.0/14
-      - parameter_key: ProdOuArn
-        parameter_value: arn:aws:organizations::444629336067:ou/o-mmrpss74fy/ou-2ure-kyl7gx7p
-    export_outputs:
-      - name: /network/ipam/prod-pool-id
-        value: $[output_ProdPoolID]
+  # - name: ipam
+  #   resource_file: templates/networking/ipam.yaml
+  #   deploy_method: stack_set
+  #   deployment_targets:
+  #     accounts:
+  #       - 240724570208 # Network account
+  #   regions:
+  #     - us-east-1
+  #   parameters:
+  #     - parameter_key: Region
+  #       parameter_value: us-east-1
+  #     - parameter_key: TopLevelCidr
+  #       parameter_value: 10.0.0.0/9
+  #     - parameter_key: RegionLevelCidr
+  #       parameter_value: 10.0.0.0/10
+  #     - parameter_key: ProdLevelCidr
+  #       parameter_value: 10.0.0.0/14
+  #     - parameter_key: ProdOuArn
+  #       parameter_value: arn:aws:organizations::444629336067:ou/o-mmrpss74fy/ou-2ure-kyl7gx7p
+  #   export_outputs:
+  #     - name: /network/ipam/prod-pool-id
+  #       value: $[output_ProdPoolID]
 
 
-  - name: STNO-Org-Role
-    resource_file: templates/networking/network-orchestration-organization-role.yaml
-    deploy_method: stack_set
-    deployment_targets:
-      accounts:
-        - 444629336067 # Master account
-    regions:
-      - us-east-1
-    parameters:
-      - parameter_key: HubAccount
-        parameter_value: '240724570208' # Networking account
-    export_outputs:
-      - name: /network/stno/org-role
-        value: $[output_RoleArn]
+  # - name: STNO-Org-Role
+  #   resource_file: templates/networking/network-orchestration-organization-role.yaml
+  #   deploy_method: stack_set
+  #   deployment_targets:
+  #     accounts:
+  #       - 444629336067 # Master account
+  #   regions:
+  #     - us-east-1
+  #   parameters:
+  #     - parameter_key: HubAccount
+  #       parameter_value: '240724570208' # Networking account
+  #   export_outputs:
+  #     - name: /network/stno/org-role
+  #       value: $[output_RoleArn]
 
-  # STNO HUB Deployment ##
-  # NOTE: Add this resource to every new region added
-  - name: STNO-Hub-us-east-1
-    resource_file: templates/networking/network-orchestration-hub.yaml
-    deploy_method: stack_set
-    deployment_targets:
-      accounts:
-        - 240724570208 # Networking account
-    regions:
-      - us-east-1
-    parameters:
-      - parameter_key: OrganizationManagementAccountRoleArn
-        parameter_value: $[alfred_ssm_/network/stno/org-role]
-      - parameter_key: PrincipalType
-        parameter_value: AWS Organization ARN
-      - parameter_key: Principals
-        parameter_value: arn:aws:organizations::444629336067:organization/o-mmrpss74fy
-      - parameter_key: ConsoleLoginInformationEmail
-        parameter_value: oleksii.bebych@automat-it.com
-      - parameter_key: ExistingTransitGatewayId
-        parameter_value: ''
-      - parameter_key: ExistingGlobalNetworkId
-        parameter_value: ''
-      - parameter_key: CustomerManagedPrefixListIds
-        parameter_value: ''
-      - parameter_key: DefaultRoute
-        parameter_value: 'All-Traffic (0/0)'
-      - parameter_key: ApprovalNotification
-        parameter_value: 'Yes'
-      - parameter_key: ApprovalNotificationEmail
-        parameter_value: 'oleksii.bebych@automat-it.com'
-      - parameter_key: DeployWebUi
-        parameter_value: 'Yes'
-      - parameter_key: CognitoSAMLProviderNameParameter
-        parameter_value: ''
-      - parameter_key: CognitoSAMLProviderMetadataUrlParameter
-        parameter_value: ''
-      - parameter_key: CognitoDomainPrefixParameter
-        parameter_value: ait-demo-ct-new
-      - parameter_key: AllowListedRanges
-        parameter_value: '0.0.0.0/1,128.0.0.0/1'
+  # # STNO HUB Deployment ##
+  # # NOTE: Add this resource to every new region added
+  # - name: STNO-Hub-us-east-1
+  #   resource_file: templates/networking/network-orchestration-hub.yaml
+  #   deploy_method: stack_set
+  #   deployment_targets:
+  #     accounts:
+  #       - 240724570208 # Networking account
+  #   regions:
+  #     - us-east-1
+  #   parameters:
+  #     - parameter_key: OrganizationManagementAccountRoleArn
+  #       parameter_value: $[alfred_ssm_/network/stno/org-role]
+  #     - parameter_key: PrincipalType
+  #       parameter_value: AWS Organization ARN
+  #     - parameter_key: Principals
+  #       parameter_value: arn:aws:organizations::444629336067:organization/o-mmrpss74fy
+  #     - parameter_key: ConsoleLoginInformationEmail
+  #       parameter_value: oleksii.bebych@automat-it.com
+  #     - parameter_key: ExistingTransitGatewayId
+  #       parameter_value: ''
+  #     - parameter_key: ExistingGlobalNetworkId
+  #       parameter_value: ''
+  #     - parameter_key: CustomerManagedPrefixListIds
+  #       parameter_value: ''
+  #     - parameter_key: DefaultRoute
+  #       parameter_value: 'All-Traffic (0/0)'
+  #     - parameter_key: ApprovalNotification
+  #       parameter_value: 'Yes'
+  #     - parameter_key: ApprovalNotificationEmail
+  #       parameter_value: 'oleksii.bebych@automat-it.com'
+  #     - parameter_key: DeployWebUi
+  #       parameter_value: 'Yes'
+  #     - parameter_key: CognitoSAMLProviderNameParameter
+  #       parameter_value: ''
+  #     - parameter_key: CognitoSAMLProviderMetadataUrlParameter
+  #       parameter_value: ''
+  #     - parameter_key: CognitoDomainPrefixParameter
+  #       parameter_value: ait-demo-ct-new
+  #     - parameter_key: AllowListedRanges
+  #       parameter_value: '0.0.0.0/1,128.0.0.0/1'
 
-  ## NOTE: Add this resource to every new region added
-  - name: STNO-Spoke-Deploy
-    resource_file: templates/networking/network-orchestration-spoke.yaml
-    deploy_method: stack_set
-    deployment_targets:
-      organizational_units:
-        - Root
-    regions:
-      - us-east-1
-    parameters:
-      - parameter_key: HubAccount
-        parameter_value: '240724570208' # Networking account
+  # ## NOTE: Add this resource to every new region added
+  # - name: STNO-Spoke-Deploy
+  #   resource_file: templates/networking/network-orchestration-spoke.yaml
+  #   deploy_method: stack_set
+  #   deployment_targets:
+  #     organizational_units:
+  #       - Root
+  #   regions:
+  #     - us-east-1
+  #   parameters:
+  #     - parameter_key: HubAccount
+  #       parameter_value: '240724570208' # Networking account
 
   ## Management VPC ##
   # - name: demo-vpc

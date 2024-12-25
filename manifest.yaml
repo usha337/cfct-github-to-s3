@@ -11,7 +11,7 @@ resources:
       organizational_units:
         - Root
 
-- name: restrict-creatoinof-gp2volume
+  - name: restrict-creatoinof-gp2volume
     description: To prevent gp2 volume creation
     resource_file: policies/scp-ebsvolumegp2block.json
     deploy_method: scp
